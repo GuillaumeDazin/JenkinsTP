@@ -2,35 +2,21 @@ pipeline {
     agent any
 
     stages {
-        stage('Preparation') {
+        stage('Check Agent') {
             steps {
-                echo 'Preparation du projet'
-                bat 'echo Verification de l environnement'
+                echo 'Verification de l agent Jenkins'
+
+                bat 'hostname'
+                bat 'java -version'
             }
         }
 
-        stage('Build') {
+        stage('Environment') {
             steps {
-                echo 'Compilation du projet'
-                bat 'echo Build termine'
+                echo 'Verification de l environnement'
+
+                bat 'echo Nous sommes sur Windows'
             }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Execution des tests'
-                bat 'echo Tests termines'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline terminee avec succes !'
-        }
-
-        failure {
-            echo 'La pipeline a echoue.'
         }
     }
 }
