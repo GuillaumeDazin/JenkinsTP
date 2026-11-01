@@ -1,36 +1,10 @@
+/* Requires the Docker Pipeline plugin */
 pipeline {
-    agent any
-
-    environment {
-        APP_NAME = 'JenkinsTP'
-        APP_VERSION = '1.0'
-        DATABASE = 'MySQL'
-    }
-
+    agent { docker { image 'maven:3.10.0-eclipse-temurin-21-alpine' } }
     stages {
-        stage('Display Global Variables') {
+        stage('build') {
             steps {
-                echo "Application : ${env.APP_NAME}"
-                echo "Version : ${env.APP_VERSION}"
-                echo "Base de donnees : ${env.DATABASE}"
-            }
-        }
-
-        stage('Display Jenkins Variables') {
-            steps {
-                echo "Build numero : ${env.BUILD_NUMBER}"
-                echo "Nom du job : ${env.JOB_NAME}"
-                echo "Workspace : ${env.WORKSPACE}"
-            }
-        }
-
-        stage('Local Environment') {
-            environment {
-                ENVIRONMENT = 'Testing'
-            }
-            steps {
-                echo "Environnement : ${env.ENVIRONMENT}"
-                echo "Application : ${env.APP_NAME}"
+                sh 'mvn --version'
             }
         }
     }
