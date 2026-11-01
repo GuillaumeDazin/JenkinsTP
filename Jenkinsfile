@@ -1,21 +1,36 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Check Agent') {
-            steps {
-                echo 'Verification de l agent Jenkins'
+    environment {
+        APP_NAME = 'JenkinsTP'
+        APP_VERSION = '1.0'
+        DATABASE = 'MySQL'
+    }
 
-                bat 'hostname'
-                bat 'java -version'
+    stages {
+        stage('Display Global Variables') {
+            steps {
+                echo "Application : ${env.APP_NAME}"
+                echo "Version : ${env.APP_VERSION}"
+                echo "Base de donnees : ${env.DATABASE}"
             }
         }
 
-        stage('Environment') {
+        stage('Display Jenkins Variables') {
             steps {
-                echo 'Verification de l environnement'
+                echo "Build numero : ${env.BUILD_NUMBER}"
+                echo "Nom du job : ${env.JOB_NAME}"
+                echo "Workspace : ${env.WORKSPACE}"
+            }
+        }
 
-                bat 'echo Nous sommes sur Windows'
+        stage('Local Environment') {
+            environment {
+                ENVIRONMENT = 'Testing'
+            }
+            steps {
+                echo "Environnement : ${env.ENVIRONMENT}"
+                echo "Application : ${env.APP_NAME}"
             }
         }
     }
