@@ -1,0 +1,3 @@
+@echo off
+echo Deploying application...
+exit /b 0
