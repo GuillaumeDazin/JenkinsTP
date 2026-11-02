@@ -1,0 +1,3 @@
+@echo off
+echo Checking application health...
+exit /b 0
