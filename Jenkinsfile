@@ -2,16 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Deploy') {
+        stage('Test') {
             steps {
-                retry(3) {
-                    bat 'flakey-deploy.bat'
-                }
-
-                timeout(time: 3, unit: 'MINUTES') {
-                    bat 'health-check.bat'
-                }
+                bat 'echo Fail! & exit /b 1'
             }
         }
     }
-}
+
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
