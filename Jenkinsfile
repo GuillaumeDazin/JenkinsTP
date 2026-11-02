@@ -2,9 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Deploy') {
             steps {
-                bat 'python --version'
+                retry(3) {
+                    bat 'flakey-deploy.bat'
+                }
+
+                timeout(time: 3, unit: 'MINUTES') {
+                    bat 'health-check.bat'
+                }
             }
         }
     }
